@@ -1,13 +1,370 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* --- Global Styles --- */
 body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  background-color: #f7f8fa; /* Light grey background */
+  color: #333;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  padding: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+h1, h2, h3, h4, h5, h6 {
+  color: #1a202c; /* Darker heading color */
+  font-weight: 600;
+}
+
+/* --- App Layout --- */
+.app-container {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 32px;
+  background-color: #ffffff;
+  border-radius: 16px; /* Softer, larger corners */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 5px 10px rgba(0, 0, 0, 0.02);
+  border: 1px solid #edf2f7;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 32px;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 24px;
+}
+
+header h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #2c5282; /* Deep blue */
+}
+
+/* --- Budget Summary --- */
+.budget-summary {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+
+.summary-card {
+  flex-grow: 1;
+  flex-basis: 250px; /* Base size before growing */
+  background-color: #fdfdfd;
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.03);
+  transition: all 0.2s ease-in-out;
+}
+
+.summary-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+}
+
+.summary-card h3 {
+  margin: 0 0 12px 0;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #4a5568; /* Grey text */
+}
+
+.summary-card span {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a202c;
+  display: block; /* Ensures it takes its own line */
+}
+
+/* Color coding for remaining balance */
+.summary-card.positive span { color: #2f855a; } /* Green */
+.summary-card.warning span { color: #dd6b20; } /* Orange */
+.summary-card.negative span { color: #c53030; } /* Red */
+
+/* --- Main Content Grid (Responsive) --- */
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr; /* Form is smaller */
+  gap: 32px;
+}
+
+/* --- Expense Form --- */
+.form-section {
+  background: #fdfdfd;
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  height: fit-content; /* Make form card stick */
+}
+
+.form-section h2 {
+  margin-top: 0;
+  margin-bottom: 24px;
+  font-size: 1.5rem;
+}
+
+.form-control {
+  margin-bottom: 16px;
+}
+
+.form-control label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #4a5568;
+}
+
+.form-control input[type='text'],
+.form-control input[type='number'] {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 1rem;
+  border: 1px solid #cbd5e0;
+  border-radius: 8px;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.form-control input[type='text']:focus,
+.form-control input[type='number']:focus {
+  outline: none;
+  border-color: #2c5282;
+  box-shadow: 0 0 0 1px #2c5282;
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 14px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background-color: #2c5282; /* Deep blue */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.btn-submit:hover {
+  background-color: #1a365d; /* Darker blue */
+}
+
+/* --- Expense List --- */
+.list-section h2 {
+  margin-top: 0;
+  margin-bottom: 24px;
+  font-size: 1.5rem;
+}
+
+.list-section {
+  max-height: 450px;
+  overflow-y: auto;
+  padding-right: 10px; /* For scrollbar space */
+}
+
+.expense-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.expense-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background-color: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.expense-name {
+  font-weight: 500;
+  font-size: 1rem;
+  color: #2d3748;
+}
+
+.expense-amount {
+  font-weight: 600;
+  color: #c53030; /* Red for expenses */
+  background-color: #fed7d7;
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 0.9rem;
+}
+
+.no-expenses {
+  text-align: center;
+  color: #718096;
+  font-style: italic;
+  margin-top: 32px;
+  padding: 24px;
+  background: #f7f8fa;
+  border-radius: 12px;
+}
+
+/* --- Edit Budget Styles --- */
+.budget-display {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.btn-edit {
+  background: #edf2f7;
+  border: 1px solid #e2e8f0;
+  color: #4a5568;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn-edit:hover {
+  background: #e2e8f0;
+}
+
+.edit-budget-form {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.budget-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #2c5282;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-align: left;
+  max-width: 150px;
+}
+
+.btn-save {
+  background: #2f855a; /* Green */
+  color: white;
+  border: none;
+  padding: 9px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn-save:hover {
+  background: #276749;
+}
+
+
+/* --- Welcome Page Styles --- */
+.welcome-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.welcome-box {
+  background: #ffffff;
+  padding: 40px 50px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 500px;
+  width: 100%;
+  animation: fadeIn 1s ease-out;
+}
+
+.welcome-icon {
+  width: 80px;
+  height: 80px;
+  color: #2c5282;
+  margin-bottom: 20px;
+  animation: pulse 2s infinite ease-in-out;
+}
+
+.welcome-title {
+  font-size: 2.2rem;
+  color: #2c5282;
+  margin-bottom: 10px;
+}
+
+.welcome-subtitle {
+  font-size: 1.1rem;
+  color: #4a5568;
+  margin-bottom: 30px;
+}
+
+.welcome-button {
+  width: 100%;
+  padding: 15px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+  background-color: #2c5282;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  transform: scale(1);
+}
+
+.welcome-button:hover {
+  background-color: #1a365d;
+  box-shadow: 0 4px 15px rgba(44, 82, 130, 0.4);
+  transform: scale(1.02);
+}
+
+/* --- Keyframe Animations --- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* --- Responsive Media Query --- */
+@media (max-width: 900px) {
+  .content-grid {
+    grid-template-columns: 1fr; /* Stack columns on smaller screens */
+  }
+
+  .app-container {
+    margin: 20px;
+    padding: 24px;
+  }
+  
+  .budget-summary {
+    flex-direction: column; /* Stack summary cards */
+  }
+
+  .list-section {
+    max-height: 350px; /* Adjust height for mobile */
+  }
 }
